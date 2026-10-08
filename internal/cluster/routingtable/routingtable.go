@@ -443,7 +443,9 @@ func (r *RoutingTable) Shutdown(ctx context.Context) error {
 		return err
 	}
 
+	r.updateRoutingMtx.Lock()
 	r.cancel()
+	r.updateRoutingMtx.Unlock()
 	done := make(chan struct{})
 	go func() {
 		r.wg.Wait()

@@ -70,6 +70,13 @@ func (r *RoutingTable) updateRoutingCommandHandler(conn redcon.Conn, cmd redcon.
 	r.updateRoutingMtx.Lock()
 	defer r.updateRoutingMtx.Unlock()
 
+	select {
+	case <-r.ctx.Done():
+		protocol.WriteError(conn, ErrServerGone)
+		return
+	default:
+	}
+
 	updateRoutingCmd, err := protocol.ParseUpdateRoutingCommand(cmd)
 	if err != nil {
 		protocol.WriteError(conn, err)
