@@ -19,6 +19,7 @@ import (
 	"context"
 	"net"
 	"reflect"
+	"slices"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -55,9 +56,9 @@ func TestRoutingTableParallelScanPreservesSerialOwners(t *testing.T) {
 	var enabled atomic.Bool
 	var active, peak atomic.Int64
 	var nodes []*RoutingTable
-	for i := range 3 {
+	for i := range 5 {
 		c := testutil.NewConfig()
-		c.PartitionCount = 31
+		c.PartitionCount = 271
 		c.ReplicaCount = 2
 		c.RoutingTablePushInterval = time.Hour
 		if i == 0 {
@@ -78,6 +79,13 @@ func TestRoutingTableParallelScanPreservesSerialOwners(t *testing.T) {
 	r := nodes[0]
 	r.Lock()
 	defer r.Unlock()
+	restarted := nodes[1].This()
+	restarted.ID++
+	owners := []discovery.Member{{Name: "departed", ID: 999}, restarted}
+	for _, node := range nodes {
+		owners = append(owners, node.This())
+	}
+	original := slices.Clone(owners)
 	for id := uint64(0); id < r.config.PartitionCount; id++ {
 		for i, node := range nodes {
 			if (id+uint64(i))%2 == 0 {
@@ -91,9 +99,6 @@ func TestRoutingTableParallelScanPreservesSerialOwners(t *testing.T) {
 				node.backup.PartitionByID(id).Map().Store("data", f)
 			}
 		}
-		restarted := nodes[1].This()
-		restarted.ID++
-		owners := []discovery.Member{{Name: "departed", ID: 999}, restarted, nodes[0].This(), nodes[1].This(), nodes[2].This()}
 		r.primary.PartitionByID(id).SetOwners(owners)
 		r.backup.PartitionByID(id).SetOwners(owners)
 	}
@@ -104,6 +109,11 @@ func TestRoutingTableParallelScanPreservesSerialOwners(t *testing.T) {
 	enabled.Store(true)
 	r.fillRoutingTable()
 	enabled.Store(false)
+	require.Equal(t, original, owners, "pruning must not mutate the published backing shared by partitions")
+	for id := uint64(0); id < r.config.PartitionCount; id++ {
+		require.Equal(t, original, r.primary.PartitionByID(id).Owners())
+		require.Equal(t, original, r.backup.PartitionByID(id).Owners())
+	}
 	if !reflect.DeepEqual(r.table, expected) {
 		t.Fatal("parallel scan changed serial ownership lists")
 	}
