@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"github.com/cespare/xxhash/v2"
-	"github.com/olric-data/olric/config"
+	"github.com/voluzi/olric/config"
 	"github.com/vmihailenco/msgpack/v5"
 )
 

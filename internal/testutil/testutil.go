@@ -22,9 +22,9 @@ import (
 	"time"
 
 	"github.com/hashicorp/memberlist"
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/server"
-	"github.com/olric-data/olric/pkg/flog"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/server"
+	"github.com/voluzi/olric/pkg/flog"
 	"github.com/stretchr/testify/require"
 )
 

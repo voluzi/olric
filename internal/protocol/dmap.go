@@ -22,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/olric-data/olric/internal/util"
+	"github.com/voluzi/olric/internal/util"
 	"github.com/redis/go-redis/v9"
 	"github.com/tidwall/redcon"
 )

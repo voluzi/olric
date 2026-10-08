@@ -26,8 +26,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/util"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/util"
 	"github.com/tidwall/redcon"
 )
 

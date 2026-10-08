@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/olric-data/olric/internal/kvstore/table"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/kvstore/table"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 type transferIterator struct {

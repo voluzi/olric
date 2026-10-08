@@ -24,12 +24,12 @@ import (
 	"time"
 
 	"github.com/hashicorp/memberlist"
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/environment"
-	"github.com/olric-data/olric/internal/server"
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/environment"
+	"github.com/voluzi/olric/internal/server"
+	"github.com/voluzi/olric/internal/testutil"
 	"golang.org/x/sync/errgroup"
 )
 

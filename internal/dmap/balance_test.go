@@ -21,11 +21,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/events"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/testcluster"
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/events"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/redcon"
 )

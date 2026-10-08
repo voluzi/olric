@@ -20,11 +20,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/internal/dmap"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/pubsub"
-	"github.com/olric-data/olric/internal/testutil"
-	"github.com/olric-data/olric/stats"
+	"github.com/voluzi/olric/internal/dmap"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/pubsub"
+	"github.com/voluzi/olric/internal/testutil"
+	"github.com/voluzi/olric/stats"
 	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/require"
 )

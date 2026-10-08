@@ -18,7 +18,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/olric-data/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testcluster"
 )
 
 func TestDMapService(t *testing.T) {

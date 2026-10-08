@@ -22,12 +22,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/config"
+	"github.com/voluzi/olric/config"
 	"github.com/stretchr/testify/require"
 )
 
 func TestIntegration_NodesJoinOrLeftDuringQuery(t *testing.T) {
-	// TODO: https://github.com/olric-data/olric/issues/227
+	// TODO: https://github.com/voluzi/olric/issues/227
 	t.Skip("TestIntegration_NodesJoinOrLeftDuringQuery: flaky test")
 
 	newConfig := func() *config.Config {

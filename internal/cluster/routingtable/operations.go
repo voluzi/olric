@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/cespare/xxhash/v2"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/protocol"
 	"github.com/tidwall/redcon"
 	"github.com/vmihailenco/msgpack/v5"
 )

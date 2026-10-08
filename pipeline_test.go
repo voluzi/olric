@@ -23,7 +23,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/require"
 
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/testutil"
 )
 
 func TestDMapPipeline_Put(t *testing.T) {

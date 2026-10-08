@@ -20,13 +20,13 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/dmap"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/pubsub"
-	"github.com/olric-data/olric/internal/server"
-	"github.com/olric-data/olric/stats"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/dmap"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/pubsub"
+	"github.com/voluzi/olric/internal/server"
+	"github.com/voluzi/olric/stats"
 	"github.com/tidwall/redcon"
 )
 

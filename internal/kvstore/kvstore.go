@@ -27,9 +27,9 @@ import (
 	"sort"
 	"time"
 
-	"github.com/olric-data/olric/internal/kvstore/entry"
-	"github.com/olric-data/olric/internal/kvstore/table"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/kvstore/entry"
+	"github.com/voluzi/olric/internal/kvstore/table"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 const (

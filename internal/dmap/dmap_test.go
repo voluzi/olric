@@ -19,7 +19,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/olric-data/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testcluster"
 )
 
 func TestDMap_Name(t *testing.T) {

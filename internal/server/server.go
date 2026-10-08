@@ -21,9 +21,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/olric-data/olric/internal/checkpoint"
-	"github.com/olric-data/olric/internal/stats"
-	"github.com/olric-data/olric/pkg/flog"
+	"github.com/voluzi/olric/internal/checkpoint"
+	"github.com/voluzi/olric/internal/stats"
+	"github.com/voluzi/olric/pkg/flog"
 	"github.com/tidwall/redcon"
 )
 

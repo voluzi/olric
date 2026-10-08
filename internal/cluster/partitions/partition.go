@@ -18,7 +18,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/olric-data/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/discovery"
 )
 
 // Partition is a basic, logical storage unit in Olric and stores DMaps in a sync.Map.

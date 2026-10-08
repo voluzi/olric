@@ -24,8 +24,8 @@ import (
 	"time"
 
 	"github.com/hashicorp/memberlist"
-	"github.com/olric-data/olric/config/internal/loader"
-	"github.com/olric-data/olric/hasher"
+	"github.com/voluzi/olric/config/internal/loader"
+	"github.com/voluzi/olric/hasher"
 	"github.com/pkg/errors"
 )
 

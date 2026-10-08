@@ -20,12 +20,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/internal/kvstore"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/kvstore"
+	"github.com/voluzi/olric/pkg/storage"
 
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/testcluster"
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 

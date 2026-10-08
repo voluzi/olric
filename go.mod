@@ -1,4 +1,4 @@
-module github.com/olric-data/olric
+module github.com/voluzi/olric
 
 go 1.23.0
 

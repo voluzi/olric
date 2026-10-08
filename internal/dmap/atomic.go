@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/resp"
-	"github.com/olric-data/olric/internal/util"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/resp"
+	"github.com/voluzi/olric/internal/util"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 func (dm *DMap) loadCurrentAtomicInt(e *env) (int, int64, error) {

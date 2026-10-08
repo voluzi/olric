@@ -18,9 +18,9 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/olric-data/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/protocol"
 
-	"github.com/olric-data/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/discovery"
 	"github.com/vmihailenco/msgpack/v5"
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/semaphore"

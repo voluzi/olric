@@ -18,9 +18,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/olric-data/olric/internal/cluster/routingtable"
-	"github.com/olric-data/olric/internal/testcluster"
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/cluster/routingtable"
+	"github.com/voluzi/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 

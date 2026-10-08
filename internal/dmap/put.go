@@ -20,14 +20,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/bufpool"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/resp"
-	"github.com/olric-data/olric/internal/stats"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/bufpool"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/resp"
+	"github.com/voluzi/olric/internal/stats"
+	"github.com/voluzi/olric/pkg/storage"
 	"github.com/redis/go-redis/v9"
 )
 

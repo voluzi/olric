@@ -18,8 +18,8 @@ import (
 	"errors"
 
 	"github.com/buraksezer/consistent"
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/protocol"
 )
 
 func (r *RoutingTable) distributePrimaryCopies(partID uint64) []discovery.Member {

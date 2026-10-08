@@ -17,9 +17,9 @@ package dmap
 import (
 	"strconv"
 
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/pkg/storage"
 	"github.com/tidwall/redcon"
 )
 

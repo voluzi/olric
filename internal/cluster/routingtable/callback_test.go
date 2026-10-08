@@ -19,7 +19,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/testutil"
 )
 
 func TestRoutingTable_Callback(t *testing.T) {

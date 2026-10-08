@@ -22,10 +22,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/testcluster"
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/testcluster"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

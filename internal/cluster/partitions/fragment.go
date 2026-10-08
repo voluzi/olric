@@ -15,8 +15,8 @@
 package partitions
 
 import (
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 type Fragment interface {

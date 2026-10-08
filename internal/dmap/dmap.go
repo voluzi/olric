@@ -19,8 +19,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 const nilTimeout = 0 * time.Second

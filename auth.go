@@ -17,8 +17,8 @@ package olric
 import (
 	"errors"
 
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/server"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/server"
 	"github.com/tidwall/redcon"
 )
 

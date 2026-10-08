@@ -21,8 +21,8 @@ import (
 	"time"
 
 	"github.com/cespare/xxhash/v2"
-	"github.com/olric-data/olric/internal/kvstore/entry"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/kvstore/entry"
+	"github.com/voluzi/olric/pkg/storage"
 	"github.com/stretchr/testify/require"
 )
 

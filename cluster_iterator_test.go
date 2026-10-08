@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 

@@ -17,8 +17,8 @@ package config
 import (
 	"fmt"
 
-	"github.com/olric-data/olric/internal/kvstore"
-	"github.com/olric-data/olric/pkg/storage"
+	"github.com/voluzi/olric/internal/kvstore"
+	"github.com/voluzi/olric/pkg/storage"
 )
 
 // Engine contains storage engine configuration and their implementations.

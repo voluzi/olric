@@ -18,13 +18,13 @@ import (
 	"context"
 	"sync"
 
-	"github.com/olric-data/olric/internal/cluster/routingtable"
-	"github.com/olric-data/olric/internal/environment"
-	"github.com/olric-data/olric/internal/protocol"
-	"github.com/olric-data/olric/internal/server"
-	"github.com/olric-data/olric/internal/service"
-	"github.com/olric-data/olric/internal/stats"
-	"github.com/olric-data/olric/pkg/flog"
+	"github.com/voluzi/olric/internal/cluster/routingtable"
+	"github.com/voluzi/olric/internal/environment"
+	"github.com/voluzi/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/server"
+	"github.com/voluzi/olric/internal/service"
+	"github.com/voluzi/olric/internal/stats"
+	"github.com/voluzi/olric/pkg/flog"
 )
 
 var (

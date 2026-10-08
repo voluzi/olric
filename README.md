@@ -1,6 +1,6 @@
-# Olric [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Olric%3A+Distributed+and+in-memory+key%2Fvalue+database.+It+can+be+used+both+as+an+embedded+Go+library+and+as+a+language-independent+service.+&url=https://github.com/olric-data/olric/&hashtags=golang,distributed,database)
+# Olric [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Olric%3A+Distributed+and+in-memory+key%2Fvalue+database.+It+can+be+used+both+as+an+embedded+Go+library+and+as+a+language-independent+service.+&url=https://github.com/voluzi/olric/&hashtags=golang,distributed,database)
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/olric-data/olric/.svg)](https://pkg.go.dev/github.com/olric-data/olric/) [![Go Report Card](https://goreportcard.com/badge/olric-data/olric)](https://goreportcard.com/report/github.com/olric-data/olric/) [![Discord](https://img.shields.io/discord/721708998021087273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/ahK7Vjr8We) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Go Reference](https://pkg.go.dev/badge/github.com/voluzi/olric/.svg)](https://pkg.go.dev/github.com/voluzi/olric/) [![Go Report Card](https://goreportcard.com/badge/olric-data/olric)](https://goreportcard.com/report/github.com/voluzi/olric/) [![Discord](https://img.shields.io/discord/721708998021087273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/ahK7Vjr8We) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Distributed In-Memory Cache & Key/Value Store
 
@@ -23,11 +23,11 @@ See [Docker](#docker) and [Samples](#samples) sections to get started!
 
 Join our [Discord server!](https://discord.gg/ahK7Vjr8We)
 
-The current production version is [v0.7.0](https://github.com/olric-data/olric/tree/release/v0.7)
+The current production version is [v0.7.0](https://github.com/voluzi/olric/tree/release/v0.7)
 
 ### About renaming the module
 
-`github.com/buraksezer/olric` module has been renamed to `github.com/olric-data/olric`. This change has been effective since **v0.6.0**.
+`github.com/buraksezer/olric` module has been renamed to `github.com/voluzi/olric`. This change has been effective since **v0.6.0**.
 Importing previous versions should redirect you to the new repository, but you should change the import paths in your codebase as soon as possible.
 
 There is no other difference between v0.5.7 and v0.6.0.
@@ -164,7 +164,7 @@ See the [Architecture](#architecture) section to see details.
 
 We have a few communication channels: 
 
-* [Issue Tracker](https://github.com/olric-data/olric/issues)
+* [Issue Tracker](https://github.com/voluzi/olric/issues)
 * [Discord server](https://discord.gg/ahK7Vjr8We)
 
 You should know that the issue tracker is only intended for bug reports and feature requests.
@@ -176,7 +176,7 @@ Software doesn't maintain itself. If you need support on complex topics or reque
 With a correctly configured Golang environment:
 
 ```
-go install github.com/olric-data/olric/cmd/olric-server@v0.7.0
+go install github.com/voluzi/olric/cmd/olric-server@v0.7.0
 ```
 
 Now you can start using Olric:
@@ -214,7 +214,7 @@ OK
 With olric-server, you can create an Olric cluster with a few commands. This is how to install olric-server:
 
 ```bash
-go install github.com/olric-data/olric/cmd/olric-server@v0.7.0
+go install github.com/voluzi/olric/cmd/olric-server@v0.7.0
 ```
 
 Let's create a cluster with the following:
@@ -283,7 +283,7 @@ this repository. `EmbeddedClient` provides a client implementation for [embedded
 Obviously, you can use `ClusterClient` for your embedded-member deployments. But it's good to use `EmbeddedClient` provides 
 a better performance due to localization of the queries.
 
-See the client documentation on [pkg.go.dev](https://pkg.go.dev/github.com/olric-data/olric/@v0.7.0)
+See the client documentation on [pkg.go.dev](https://pkg.go.dev/github.com/voluzi/olric/@v0.7.0)
 
 ## Cluster Events
 
@@ -992,13 +992,13 @@ You should feel free to ask any questions about configuration and integration. P
 Olric provides a function to generate default configuration to use in embedded-member mode:
 
 ```go
-import "github.com/olric-data/olric/config"
+import "github.com/voluzi/olric/config"
 ...
 c := config.New("local")
 ```
 
 The `New` function takes a parameter called `env`. It denotes the network environment and consumed by [hashicorp/memberlist](https://github.com/hashicorp/memberlist). 
-Default configuration is good enough for distributed caching scenario. In order to see all configuration parameters, please take a look at [this](https://godoc.org/github.com/olric-data/olric/config).
+Default configuration is good enough for distributed caching scenario. In order to see all configuration parameters, please take a look at [this](https://godoc.org/github.com/voluzi/olric/config).
 
 See [Sample Code](#sample-code) section for an introduction.
 
@@ -1010,13 +1010,13 @@ You can also import configuration from a YAML file by using the `Load` function:
 c, err := config.Load(path/to/olric.yaml)
 ```
 
-A sample configuration file in YAML format can be found [here](https://github.com/olric-data/olric/blob/master/cmd/olric-server/olric-server.yaml). This may be the most appropriate way to manage the Olric configuration.
+A sample configuration file in YAML format can be found [here](https://github.com/voluzi/olric/blob/master/cmd/olric-server/olric-server.yaml). This may be the most appropriate way to manage the Olric configuration.
 
 
 ### Client-Server Mode
 
 Olric provides **olric-server** to implement client-server mode. olric-server gets a YAML file for the configuration. The most basic  functionality of olric-server is that 
-translating YAML configuration into Olric's configuration struct. A sample `olric-server.yaml` file  is being provided [here](https://github.com/olric-data/olric/blob/master/cmd/olric-server/olric-server.yaml).
+translating YAML configuration into Olric's configuration struct. A sample `olric-server.yaml` file  is being provided [here](https://github.com/voluzi/olric/blob/master/cmd/olric-server/olric-server.yaml).
 
 ### Network Configuration
 
@@ -1039,8 +1039,8 @@ Olric provides a service discovery interface which can be used to implement plug
 
 We currently have a bunch of service discovery plugins for automatic peer discovery on cloud environments:
 
-* [olric-data/olric-consul-plugin](https://github.com/olric-data/olric-consul-plugin) provides a plugin using Consul.
-* [olric-data/olric-cloud-plugin](https://github.com/olric-data/olric-cloud-plugin) provides a plugin for well-known cloud providers. Including Kubernetes.
+* [olric-data/olric-consul-plugin](https://github.com/voluzi/olric-consul-plugin) provides a plugin using Consul.
+* [olric-data/olric-cloud-plugin](https://github.com/voluzi/olric-cloud-plugin) provides a plugin for well-known cloud providers. Including Kubernetes.
 * [justinfx/olric-nats-plugin](https://github.com/justinfx/olric-nats-plugin) provides a plugin using nats.io
 
 In order to get more info about installation and configuration of the plugins, see their GitHub page. 
@@ -1267,7 +1267,7 @@ dmaps:
     evictionPolicy: "NONE" # NONE/LRU
 ```
 
-If you prefer embedded-member deployment scenario, please take a look at [config#CacheConfig](https://godoc.org/github.com/olric-data/olric/config#CacheConfig) and [config#DMapCacheConfig](https://godoc.org/github.com/olric-data/olric/config#DMapCacheConfig) for the configuration.
+If you prefer embedded-member deployment scenario, please take a look at [config#CacheConfig](https://godoc.org/github.com/voluzi/olric/config#CacheConfig) and [config#DMapCacheConfig](https://godoc.org/github.com/voluzi/olric/config#DMapCacheConfig) for the configuration.
 
 
 ### Lock Implementation
@@ -1331,8 +1331,8 @@ import (
   "log"
   "time"
 
-  "github.com/olric-data/olric"
-  "github.com/olric-data/olric/config"
+  "github.com/voluzi/olric"
+  "github.com/voluzi/olric/config"
 )
 
 func main() {
@@ -1424,8 +1424,8 @@ import (
   "log"
   "time"
 
-  "github.com/olric-data/olric"
-  "github.com/olric-data/olric/config"
+  "github.com/voluzi/olric"
+  "github.com/voluzi/olric/config"
 )
 
 func main() {
@@ -1516,7 +1516,7 @@ import (
   "log"
   "time"
 
-  "github.com/olric-data/olric"
+  "github.com/voluzi/olric"
 )
 
 func main() {
@@ -1585,8 +1585,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/olric-data/olric"
-	"github.com/olric-data/olric/config"
+	"github.com/voluzi/olric"
+	"github.com/voluzi/olric/config"
 )
 
 func main() {
@@ -1695,7 +1695,7 @@ import (
   "log"
   "time"
 
-  "github.com/olric-data/olric"
+  "github.com/voluzi/olric"
 )
 
 func main() {

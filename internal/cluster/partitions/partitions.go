@@ -17,7 +17,7 @@ package partitions
 import (
 	"sync"
 
-	"github.com/olric-data/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/discovery"
 )
 
 type Kind int

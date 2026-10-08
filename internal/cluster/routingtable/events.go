@@ -17,8 +17,8 @@ package routingtable
 import (
 	"time"
 
-	"github.com/olric-data/olric/events"
-	"github.com/olric-data/olric/internal/discovery"
+	"github.com/voluzi/olric/events"
+	"github.com/voluzi/olric/internal/discovery"
 )
 
 func (r *RoutingTable) publishNodeJoinEvent(m *discovery.Member) {

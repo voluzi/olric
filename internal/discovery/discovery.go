@@ -27,10 +27,10 @@ import (
 	"time"
 
 	"github.com/hashicorp/memberlist"
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/stats"
-	"github.com/olric-data/olric/pkg/flog"
-	"github.com/olric-data/olric/pkg/service_discovery"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/stats"
+	"github.com/voluzi/olric/pkg/flog"
+	"github.com/voluzi/olric/pkg/service_discovery"
 )
 
 const eventChanCapacity = 256

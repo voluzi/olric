@@ -17,7 +17,7 @@ package discovery
 import (
 	"testing"
 
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/testutil"
 )
 
 func TestMembers(t *testing.T) {

@@ -18,8 +18,8 @@ import (
 	"context"
 	"runtime"
 
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/protocol"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/protocol"
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/semaphore"
 )

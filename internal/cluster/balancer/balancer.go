@@ -20,13 +20,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/olric-data/olric/config"
-	"github.com/olric-data/olric/internal/cluster/partitions"
-	"github.com/olric-data/olric/internal/cluster/routingtable"
-	"github.com/olric-data/olric/internal/discovery"
-	"github.com/olric-data/olric/internal/environment"
-	"github.com/olric-data/olric/internal/service"
-	"github.com/olric-data/olric/pkg/flog"
+	"github.com/voluzi/olric/config"
+	"github.com/voluzi/olric/internal/cluster/partitions"
+	"github.com/voluzi/olric/internal/cluster/routingtable"
+	"github.com/voluzi/olric/internal/discovery"
+	"github.com/voluzi/olric/internal/environment"
+	"github.com/voluzi/olric/internal/service"
+	"github.com/voluzi/olric/pkg/flog"
 )
 
 type Balancer struct {

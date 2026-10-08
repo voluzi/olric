@@ -24,9 +24,9 @@ import (
 	"time"
 
 	"github.com/hashicorp/memberlist"
-	"github.com/olric-data/olric/pkg/service_discovery"
+	"github.com/voluzi/olric/pkg/service_discovery"
 
-	"github.com/olric-data/olric/internal/testutil"
+	"github.com/voluzi/olric/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 

@@ -31,7 +31,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/olric-data/olric/internal/util"
+	"github.com/voluzi/olric/internal/util"
 )
 
 // Scan parses bytes `b` to `v` with appropriate type.

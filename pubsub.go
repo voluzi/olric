@@ -18,7 +18,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/olric-data/olric/internal/server"
+	"github.com/voluzi/olric/internal/server"
 	"github.com/redis/go-redis/v9"
 )
 
