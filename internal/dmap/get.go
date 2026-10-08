@@ -59,12 +59,11 @@ type version struct {
 // It returns the found entry or an error if the key is not found, too large, or expired.
 func (dm *DMap) getOnFragment(e *env) (storage.Entry, error) {
 	part := dm.getPartitionByHKey(e.hkey, e.kind)
-	f, err := dm.loadFragment(part)
+	f, err := dm.lockFragment(part, false, true)
 	if err != nil {
 		return nil, err
 	}
 
-	f.RLock()
 	defer f.RUnlock()
 
 	entry, err := f.storage.Get(e.hkey)
@@ -118,14 +117,13 @@ func (dm *DMap) valueToVersion(value storage.Entry) *version {
 func (dm *DMap) lookupOnThisNode(hkey uint64, key string) *version {
 	// Check on localhost, the partition owner.
 	part := dm.getPartitionByHKey(hkey, partitions.PRIMARY)
-	f, err := dm.loadFragment(part)
+	f, err := dm.lockFragment(part, false, true)
 	if err != nil {
 		if !errors.Is(err, errFragmentNotFound) {
 			dm.s.log.V(3).Printf("[ERROR] Failed to get DMap fragment: %v", err)
 		}
 		return dm.valueToVersion(nil)
 	}
-	f.RLock()
 	defer f.RUnlock()
 
 	value, err := f.storage.Get(hkey)
@@ -289,14 +287,13 @@ func (dm *DMap) readRepair(winner *version, versions []*version) {
 			if tmp.CompareByID(dm.s.rt.This()) {
 				hkey := partitions.HKey(dm.name, winner.entry.Key())
 				part := dm.getPartitionByHKey(hkey, partitions.PRIMARY)
-				f, err := dm.loadOrCreateFragment(part)
+				f, err := dm.lockFragment(part, true, false)
 				if err != nil {
 					dm.s.log.V(3).Printf("[ERROR] Failed to get or create the fragment for: %s on %s: %v",
 						winner.entry.Key(), dm.name, err)
 					return
 				}
 
-				f.Lock()
 				e := newEnv(context.Background())
 				e.hkey = hkey
 				e.fragment = f

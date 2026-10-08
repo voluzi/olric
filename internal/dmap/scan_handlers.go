@@ -24,9 +24,6 @@ import (
 )
 
 func (dm *DMap) scanOnFragment(f *fragment, cursor uint64, sc *ScanConfig) ([]string, uint64, error) {
-	f.Lock()
-	defer f.Unlock()
-
 	var items []string
 	var err error
 
@@ -58,13 +55,14 @@ func (dm *DMap) Scan(partID, cursor uint64, sc *ScanConfig) ([]string, uint64, e
 	} else {
 		part = dm.s.primary.PartitionByID(partID)
 	}
-	f, err := dm.loadFragment(part)
+	f, err := dm.lockFragment(part, false, false)
 	if err == errFragmentNotFound {
 		return nil, 0, nil
 	}
 	if err != nil {
 		return nil, 0, err
 	}
+	defer f.Unlock()
 	return dm.scanOnFragment(f, cursor, sc)
 }
 

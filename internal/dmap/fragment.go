@@ -179,3 +179,36 @@ func (dm *DMap) loadFragment(part *partitions.Partition) (*fragment, error) {
 }
 
 var _ partitions.Fragment = (*fragment)(nil)
+
+// lockFragment returns a live fragment with its lock held. The caller must unlock it.
+func (dm *DMap) lockFragment(part *partitions.Partition, create, read bool) (*fragment, error) {
+	for {
+		if !dm.s.isAlive() {
+			return nil, ErrServerGone
+		}
+		var f *fragment
+		var err error
+		if create {
+			f, err = dm.loadOrCreateFragment(part)
+		} else {
+			f, err = dm.loadFragment(part)
+		}
+		if err != nil {
+			return nil, err
+		}
+		if read {
+			f.RLock()
+		} else {
+			f.Lock()
+		}
+		if f.ctx.Err() == nil {
+			return f, nil
+		}
+		if read {
+			f.RUnlock()
+		} else {
+			f.Unlock()
+		}
+		// An empty fragment can be retired between lookup and locking.
+	}
+}

@@ -48,6 +48,10 @@ func (s *Service) janitor(part *partitions.Partition) {
 		f.Lock()
 		defer f.Unlock()
 
+		if f.ctx.Err() != nil {
+			return true
+		}
+
 		if f.storage.Stats().Length != 0 {
 			// It's not empty. Continue scanning.
 			return true

@@ -104,13 +104,12 @@ func (dm *DMap) prepareEntry(e *env) storage.Entry {
 
 func (dm *DMap) putOnReplicaFragment(e *env) error {
 	part := dm.getPartitionByHKey(e.hkey, partitions.BACKUP)
-	f, err := dm.loadOrCreateFragment(part)
+	f, err := dm.lockFragment(part, true, false)
 	if err != nil {
 		return err
 	}
 
 	e.fragment = f
-	f.Lock()
 	defer f.Unlock()
 
 	err = f.storage.PutRaw(e.hkey, e.value)
@@ -291,13 +290,12 @@ func (dm *DMap) checkPutConditions(e *env) error {
 
 func (dm *DMap) putOnCluster(e *env) error {
 	part := dm.getPartitionByHKey(e.hkey, partitions.PRIMARY)
-	f, err := dm.loadOrCreateFragment(part)
+	f, err := dm.lockFragment(part, true, false)
 	if err != nil {
 		return err
 	}
 
 	e.fragment = f
-	f.Lock()
 	defer f.Unlock()
 
 	if err = dm.checkPutConditions(e); err != nil {

@@ -55,13 +55,11 @@ func (dm *DMap) fragmentMergeFunction(f *fragment, hkey uint64, entry storage.En
 }
 
 func (dm *DMap) mergeFragments(part *partitions.Partition, fp *fragmentPack) error {
-	f, err := dm.loadOrCreateFragment(part)
+	f, err := dm.lockFragment(part, true, false)
 	if err != nil {
 		return err
 	}
 
-	// Acquire fragment's lock. No one should work on it.
-	f.Lock()
 	defer f.Unlock()
 
 	return f.storage.Import(fp.Payload, func(hkey uint64, entry storage.Entry) error {

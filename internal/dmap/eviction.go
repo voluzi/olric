@@ -52,8 +52,8 @@ func (dm *DMap) isKeyIdleOnFragment(hkey uint64, f *fragment) bool {
 
 func (dm *DMap) isKeyIdle(hkey uint64) bool {
 	part := dm.getPartitionByHKey(hkey, partitions.PRIMARY)
-	f, err := dm.loadFragment(part)
-	if errors.Is(err, errFragmentNotFound) {
+	f, err := dm.lockFragment(part, false, false)
+	if errors.Is(err, errFragmentNotFound) || errors.Is(err, ErrServerGone) {
 		// it's no possible to know whether the key is idle or not.
 		return false
 	}
@@ -61,7 +61,6 @@ func (dm *DMap) isKeyIdle(hkey uint64) bool {
 		// This could be a programming error and should never be happened on production systems.
 		panic(fmt.Sprintf("failed to get primary partition for: %d: %v", hkey, err))
 	}
-	f.Lock()
 	defer f.Unlock()
 	return dm.isKeyIdleOnFragment(hkey, f)
 }

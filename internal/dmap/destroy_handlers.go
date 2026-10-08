@@ -24,7 +24,7 @@ import (
 )
 
 func (dm *DMap) destroyFragmentOnPartition(part *partitions.Partition) error {
-	f, err := dm.loadFragment(part)
+	f, err := dm.lockFragment(part, false, false)
 	if errors.Is(err, errFragmentNotFound) {
 		// not exists
 		return nil
@@ -32,6 +32,7 @@ func (dm *DMap) destroyFragmentOnPartition(part *partitions.Partition) error {
 	if err != nil {
 		return err
 	}
+	defer f.Unlock()
 	return wipeOutFragment(part, dm.fragmentName, f)
 }
 

@@ -36,7 +36,7 @@ var (
 func (dm *DMap) deleteFromFragment(key string, kind partitions.Kind) error {
 	hkey := partitions.HKey(dm.name, key)
 	part := dm.getPartitionByHKey(hkey, kind)
-	f, err := dm.loadFragment(part)
+	f, err := dm.lockFragment(part, false, false)
 	if errors.Is(err, errFragmentNotFound) {
 		// key doesn't exist
 		return nil
@@ -45,7 +45,6 @@ func (dm *DMap) deleteFromFragment(key string, kind partitions.Kind) error {
 		return err
 	}
 
-	f.Lock()
 	defer f.Unlock()
 
 	return f.storage.Delete(hkey)
@@ -121,12 +120,11 @@ func (dm *DMap) deleteOnCluster(hkey uint64, key string, f *fragment) error {
 func (dm *DMap) deleteKey(key string) error {
 	hkey := partitions.HKey(dm.name, key)
 	part := dm.getPartitionByHKey(hkey, partitions.PRIMARY)
-	f, err := dm.loadOrCreateFragment(part)
+	f, err := dm.lockFragment(part, true, false)
 	if err != nil {
 		return err
 	}
 
-	f.Lock()
 	defer f.Unlock()
 
 	// Check the HKey before trying to delete it.
