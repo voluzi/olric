@@ -67,7 +67,7 @@ func (c *dmapConfig) load(dc *config.DMaps, name string) error {
 			if c.evictionPolicy != cs.EvictionPolicy {
 				c.evictionPolicy = cs.EvictionPolicy
 			}
-			if c.engine == nil {
+			if cs.Engine != nil {
 				c.engine = cs.Engine
 			}
 		}

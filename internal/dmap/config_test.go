@@ -76,3 +76,18 @@ func TestDMap_Config(t *testing.T) {
 		require.Equal(t, c.DMaps.Custom["foobar"].Engine, dcc.engine)
 	})
 }
+
+func TestDMap_Config_CustomEngineOverridesGlobal(t *testing.T) {
+	c := config.New("local")
+	c.DMaps.Engine = testutil.NewEngineConfig(t)
+	custom := &config.Engine{Name: "kvstore", Config: map[string]interface{}{"tableSize": uint64(4096)}}
+	c.DMaps.Custom = map[string]config.DMap{"foobar": {Engine: custom}}
+
+	dc := dmapConfig{}
+	require.NoError(t, dc.load(c.DMaps, "foobar"))
+	require.Same(t, custom, dc.engine)
+
+	dc = dmapConfig{}
+	require.NoError(t, dc.load(c.DMaps, "mydmap"))
+	require.Same(t, c.DMaps.Engine, dc.engine)
+}
