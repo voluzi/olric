@@ -71,6 +71,7 @@ type RoutingTable struct {
 	callbacks        []func()
 	callbackMtx      sync.Mutex
 	pushPeriod       time.Duration
+	routingChanged   chan struct{}
 	// The command handlers of the routing table service should wait for the cluster join event.
 	joined chan struct{}
 	ctx    context.Context
@@ -100,19 +101,20 @@ func New(e *environment.Environment) *RoutingTable {
 	}
 
 	rt := &RoutingTable{
-		members:    newMembers(),
-		discovery:  discovery.New(log, c),
-		config:     c,
-		log:        log,
-		consistent: consistent.New(nil, cc),
-		primary:    e.Get("primary").(*partitions.Partitions),
-		backup:     e.Get("backup").(*partitions.Partitions),
-		client:     e.Get("client").(*server.Client),
-		server:     e.Get("server").(*server.Server),
-		pushPeriod: c.RoutingTablePushInterval,
-		joined:     make(chan struct{}),
-		ctx:        ctx,
-		cancel:     cancel,
+		members:        newMembers(),
+		discovery:      discovery.New(log, c),
+		config:         c,
+		log:            log,
+		consistent:     consistent.New(nil, cc),
+		primary:        e.Get("primary").(*partitions.Partitions),
+		backup:         e.Get("backup").(*partitions.Partitions),
+		client:         e.Get("client").(*server.Client),
+		server:         e.Get("server").(*server.Server),
+		pushPeriod:     c.RoutingTablePushInterval,
+		routingChanged: make(chan struct{}, 1),
+		joined:         make(chan struct{}),
+		ctx:            ctx,
+		cancel:         cancel,
 	}
 	registerErrors()
 	rt.RegisterHandlers()
@@ -341,7 +343,10 @@ func (r *RoutingTable) listenClusterEvents(eventCh chan *discovery.ClusterEvent)
 			return
 		case e := <-eventCh:
 			r.processClusterEvent(e)
-			r.updateRouting()
+			select {
+			case r.routingChanged <- struct{}{}:
+			default:
+			}
 		}
 	}
 }
@@ -356,8 +361,9 @@ func (r *RoutingTable) pushPeriodically() {
 		case <-r.ctx.Done():
 			return
 		case <-ticker.C:
-			r.updateRouting()
+		case <-r.routingChanged:
 		}
+		r.updateRouting()
 	}
 }
 
