@@ -21,12 +21,12 @@ import (
 	"sync"
 	"time"
 
+	"github.com/vmihailenco/msgpack/v5"
 	"github.com/voluzi/olric/events"
 	"github.com/voluzi/olric/internal/cluster/partitions"
 	"github.com/voluzi/olric/internal/discovery"
 	"github.com/voluzi/olric/internal/protocol"
 	"github.com/voluzi/olric/pkg/storage"
-	"github.com/vmihailenco/msgpack/v5"
 )
 
 type fragment struct {
@@ -49,7 +49,7 @@ func (f *fragment) Compaction() (bool, error) {
 	select {
 	case <-f.ctx.Done():
 		// fragment is closed or destroyed
-		return false, nil
+		return true, nil
 	default:
 	}
 	return f.storage.Compaction()

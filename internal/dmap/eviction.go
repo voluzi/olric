@@ -137,6 +137,9 @@ func (s *Service) scanFragmentForEviction(partID uint64, name string, f *fragmen
 		}
 		f.Lock()
 		defer f.Unlock()
+		if f.ctx.Err() != nil {
+			return false
+		}
 		count, keyCount := 0, 0
 		f.storage.RangeHKey(func(hkey uint64) bool {
 			keyCount++
