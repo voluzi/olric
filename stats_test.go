@@ -20,13 +20,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/redis/go-redis/v9"
+	"github.com/stretchr/testify/require"
 	"github.com/voluzi/olric/internal/dmap"
 	"github.com/voluzi/olric/internal/protocol"
 	"github.com/voluzi/olric/internal/pubsub"
 	"github.com/voluzi/olric/internal/testutil"
 	"github.com/voluzi/olric/stats"
-	"github.com/redis/go-redis/v9"
-	"github.com/stretchr/testify/require"
 )
 
 func resetPubSubStats() {
@@ -276,4 +276,30 @@ func TestStats_DMap(t *testing.T) {
 		require.Greater(t, dmap.EvictedTotal.Read(), int64(0))
 		require.GreaterOrEqual(t, dmap.EntriesTotal.Read(), int64(10))
 	})
+}
+
+func TestOlric_Stats_ConcurrentMembership(t *testing.T) {
+	cluster := newTestOlricCluster(t)
+	db := cluster.addMember(t)
+	member := db.rt.This()
+	member.ID++
+	members := db.rt.Members()
+	ctx, cancel := context.WithCancel(context.Background())
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		for ctx.Err() == nil {
+			members.Lock()
+			members.Add(member)
+			members.Delete(member.ID)
+			members.Unlock()
+		}
+	}()
+	defer func() { cancel(); <-done }()
+	client := db.NewEmbeddedClient()
+	for i := 0; i < 1000; i++ {
+		s, err := client.Stats(context.Background(), db.rt.This().String())
+		require.NoError(t, err)
+		require.Contains(t, s.ClusterMembers, stats.MemberID(db.rt.This().ID))
+	}
 }
