@@ -16,6 +16,39 @@ package discovery
 
 import "github.com/hashicorp/memberlist"
 
+// Memberlist invokes event delegates under its node lock. Capture membership
+// here; Members() exposes Node pointers whose metadata can change after return.
+type memberEvents struct {
+	discovery *Discovery
+	ch        chan memberlist.NodeEvent
+}
+
+func (e *memberEvents) notify(event memberlist.NodeEventType, node *memberlist.Node) {
+	member, _ := NewMemberFromMetadata(node.Meta)
+	e.discovery.membersMtx.Lock()
+	if event == memberlist.NodeLeave {
+		delete(e.discovery.members, node.Name)
+	} else {
+		e.discovery.members[node.Name] = member
+	}
+	e.discovery.membersMtx.Unlock()
+
+	snapshot := *node
+	e.ch <- memberlist.NodeEvent{Event: event, Node: &snapshot}
+}
+
+func (e *memberEvents) NotifyJoin(node *memberlist.Node) {
+	e.notify(memberlist.NodeJoin, node)
+}
+
+func (e *memberEvents) NotifyLeave(node *memberlist.Node) {
+	e.notify(memberlist.NodeLeave, node)
+}
+
+func (e *memberEvents) NotifyUpdate(node *memberlist.Node) {
+	e.notify(memberlist.NodeUpdate, node)
+}
+
 func ToClusterEvent(e memberlist.NodeEvent) *ClusterEvent {
 	return &ClusterEvent{
 		Event:    e.Event,

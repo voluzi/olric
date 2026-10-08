@@ -64,6 +64,9 @@ type Discovery struct {
 	memberlist *memberlist.Memberlist
 	config     *config.Config
 
+	membersMtx sync.RWMutex
+	members    map[string]Member
+
 	// To manage Join/Leave/Update events
 	clusterEventsMtx sync.RWMutex
 	ClusterEvents    chan *ClusterEvent
@@ -83,11 +86,12 @@ func New(log *flog.Logger, c *config.Config) *Discovery {
 	member := NewMember(c)
 	ctx, cancel := context.WithCancel(context.Background())
 	d := &Discovery{
-		member: &member,
-		config: c,
-		log:    log,
-		ctx:    ctx,
-		cancel: cancel,
+		member:  &member,
+		config:  c,
+		log:     log,
+		ctx:     ctx,
+		cancel:  cancel,
+		members: make(map[string]Member),
 	}
 	return d
 }
@@ -165,8 +169,9 @@ func (d *Discovery) Start() error {
 	eventsCh := make(chan memberlist.NodeEvent, eventChanCapacity)
 	d.config.MemberlistConfig.Delegate = dl
 	d.config.MemberlistConfig.Logger = d.config.Logger
-	d.config.MemberlistConfig.Events = &memberlist.ChannelEventDelegate{
-		Ch: eventsCh,
+	d.config.MemberlistConfig.Events = &memberEvents{
+		discovery: d,
+		ch:        eventsCh,
 	}
 	list, err := memberlist.Create(d.config.MemberlistConfig)
 	if err != nil {
@@ -210,12 +215,12 @@ func (d *Discovery) Rejoin(peers []string) (int, error) {
 
 // GetMembers returns a full list of known alive nodes.
 func (d *Discovery) GetMembers() []Member {
-	var members []Member
-	nodes := d.memberlist.Members()
-	for _, node := range nodes {
-		member, _ := NewMemberFromMetadata(node.Meta)
+	d.membersMtx.RLock()
+	members := make([]Member, 0, len(d.members))
+	for _, member := range d.members {
 		members = append(members, member)
 	}
+	d.membersMtx.RUnlock()
 
 	// sort members by birthdate
 	sort.Slice(members, func(i int, j int) bool {
