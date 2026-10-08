@@ -215,15 +215,30 @@ func (r *RoutingTable) fillRoutingTable() {
 			"the cluster has %d members currently",
 			r.config.ReplicaCount, r.NumMembers())
 	}
-	table := make(map[uint64]*route)
+	routes := make([]*route, r.config.PartitionCount)
+	jobs := make(chan uint64)
+	var workers sync.WaitGroup
+	for range min(uint64(16), r.config.PartitionCount) {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for partID := range jobs {
+				rt := &route{Owners: r.distributePrimaryCopies(partID)}
+				if r.config.ReplicaCount > config.MinimumReplicaCount {
+					rt.Backups = r.distributeBackups(partID)
+				}
+				routes[partID] = rt
+			}
+		}()
+	}
 	for partID := uint64(0); partID < r.config.PartitionCount; partID++ {
-		rt := &route{
-			Owners: r.distributePrimaryCopies(partID),
-		}
-		if r.config.ReplicaCount > config.MinimumReplicaCount {
-			rt.Backups = r.distributeBackups(partID)
-		}
-		table[partID] = rt
+		jobs <- partID
+	}
+	close(jobs)
+	workers.Wait()
+	table := make(map[uint64]*route, len(routes))
+	for partID, rt := range routes {
+		table[uint64(partID)] = rt
 	}
 	r.table = table
 }
