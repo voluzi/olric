@@ -22,12 +22,12 @@ import (
 )
 
 func wipeOutFragment(part *partitions.Partition, name string, f *fragment) error {
+	defer part.Map().Delete(name)
 	// Stop background services if there is any.
 	err := f.Close()
 	if err != nil {
 		return err
 	}
-	defer part.Map().Delete(name)
 	// Destroy data on-disk or in-memory.
 	err = f.Destroy()
 	if err != nil {
