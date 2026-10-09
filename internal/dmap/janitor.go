@@ -27,13 +27,12 @@ func wipeOutFragment(part *partitions.Partition, name string, f *fragment) error
 	if err != nil {
 		return err
 	}
+	defer part.Map().Delete(name)
 	// Destroy data on-disk or in-memory.
 	err = f.Destroy()
 	if err != nil {
 		return err
 	}
-	// Delete the fragment from partition.
-	part.Map().Delete(name)
 	return nil
 }
 

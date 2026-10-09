@@ -1,11 +1,12 @@
 package dmap
 
 import (
+	"testing"
+	"time"
+
 	"github.com/stretchr/testify/require"
 	"github.com/voluzi/olric/internal/testcluster"
 	"github.com/voluzi/olric/internal/testutil"
-	"testing"
-	"time"
 )
 
 func TestDMapCompactionPassContinuesPastRetiredFragments(t *testing.T) {
